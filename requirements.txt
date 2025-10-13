@@ -7,3 +7,6 @@ psutil>=5.9.0          # Kiểm tra process và network status
 
 # Optional (nếu cần tích hợp OpenVPN)
 python-openvpn>=1.0.0  # Wrapper cho OpenVPN
+
+# GUI dependencies
+PyQt5>=5.15.0          # Desktop GUI framework

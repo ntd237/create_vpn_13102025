@@ -180,13 +180,14 @@ class VPNCore:
             if require_admin:
                 logger.warning("⚠️  Cần quyền Administrator để kết nối VPN")
             
-            # Chạy OpenVPN process trong console mới và detach
-            # Trên Windows: CREATE_NEW_CONSOLE + DETACHED_PROCESS giúp process chạy độc lập
+            # Chạy OpenVPN process ẩn (không hiện console)
+            # Trên Windows: CREATE_NO_WINDOW để chạy ngầm
             if os.name == 'nt':  # Windows
-                # Tạo process group mới để không bị kill khi parent exit
+                # CREATE_NO_WINDOW = 0x08000000 - Chạy process không hiện cửa sổ
+                CREATE_NO_WINDOW = 0x08000000
                 self.current_process = subprocess.Popen(
                     cmd,
-                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NEW_CONSOLE,
+                    creationflags=subprocess.CREATE_NEW_PROCESS_GROUP | CREATE_NO_WINDOW,
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL
                 )
