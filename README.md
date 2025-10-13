@@ -134,12 +134,35 @@ python main_gui.py
 5. Sử dụng VPN
 6. Click **"Ngắt Kết Nối"** (nút đỏ) khi xong
 
+### Exit Behavior (Quan Trọng)
+
+**Khi click nút X đóng cửa sổ**:
+
+- Nếu **VPN đang kết nối** → Hiện dialog:
+  ```
+  ┌────────────────────────────────────────┐
+  │ VPN đang kết nối.                      │
+  │ Bạn có muốn ngắt kết nối trước khi     │
+  │ thoát không?                           │
+  │                                        │
+  │     [Yes]          [Cancel]            │
+  └────────────────────────────────────────┘
+  ```
+  - **Yes**: Ngắt VPN → Đóng app
+  - **Cancel**: Giữ kết nối → KHÔNG đóng app
+
+- Nếu **VPN chưa kết nối** → App đóng ngay
+
+**Nguyên tắc đơn giản**: 
+- Click X khi VPN ON → Hỏi disconnect
+- Click X khi VPN OFF → Đóng luôn
+
 ### Giao Diện
 
 ```
 ┌─────────────────────────────────────────────┐
 │         🌐 VPN Connection Tool              │
-│      Kết nối VPN miễn phí dễ dàng           │
+│      Kết nối VPN miễn phí - Author: NTD237           │
 ├─────────────────────────────────────────────┤
 │  Chọn quốc gia: [Japan (JP) ▼]             │
 │  [🔌 Kết Nối]  [🔄 Refresh]  [⛔ Ngắt]      │

@@ -245,21 +245,19 @@ class VPNMainWindow(QMainWindow):
         
         # Header
         header = self.create_header()
-        main_layout.addWidget(header)
+        main_layout.addWidget(header, 0)  # No stretch
         
         # Control panel
         control_panel = self.create_control_panel()
-        main_layout.addWidget(control_panel)
+        main_layout.addWidget(control_panel, 0)  # No stretch
         
         # Status display
         status_display = self.create_status_display()
-        main_layout.addWidget(status_display)
+        main_layout.addWidget(status_display, 0)  # No stretch
         
-        # Log output
+        # Log output - chiếm hết space còn lại
         log_output = self.create_log_output()
-        main_layout.addWidget(log_output)
-        
-        main_layout.addStretch()
+        main_layout.addWidget(log_output, 1)  # Stretch factor = 1
     
     def create_header(self):
         """Tạo header với logo và title."""
@@ -273,7 +271,7 @@ class VPNMainWindow(QMainWindow):
         title.setAlignment(Qt.AlignCenter)
         layout.addWidget(title)
         
-        subtitle = QLabel("Kết nối VPN miễn phí dễ dàng")
+        subtitle = QLabel("Kết nối VPN miễn phí - Author: NTD237")
         subtitle.setStyleSheet("font-size: 14px; color: #64748B;")
         subtitle.setAlignment(Qt.AlignCenter)
         layout.addWidget(subtitle)
@@ -361,7 +359,7 @@ class VPNMainWindow(QMainWindow):
         
         self.log_text = QTextEdit()
         self.log_text.setReadOnly(True)
-        self.log_text.setMinimumHeight(200)
+        # Không set height cố định, để nó tự expand
         layout.addWidget(self.log_text)
         
         return group
@@ -496,6 +494,7 @@ class VPNMainWindow(QMainWindow):
         else:
             QMessageBox.warning(self, "Thất bại", message)
     
+    
     def update_status(self):
         """Cập nhật trạng thái kết nối."""
         status = self.vpn_core.get_status()
@@ -512,25 +511,29 @@ class VPNMainWindow(QMainWindow):
             self.ip_label.setText("N/A")
     
     def closeEvent(self, event):
-        """Xử lý khi đóng cửa sổ."""
+        """Xử lý khi đóng cửa sổ (nút X)."""
         # Stop timer
         self.status_timer.stop()
         
-        # Hỏi user có muốn disconnect không
+        # Nếu VPN đang kết nối, hỏi có muốn ngắt không
         if self.vpn_core.is_connected():
             reply = QMessageBox.question(
                 self,
                 "Xác nhận",
                 "VPN đang kết nối. Bạn có muốn ngắt kết nối trước khi thoát không?",
-                QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel
+                QMessageBox.Yes | QMessageBox.Cancel
             )
             
             if reply == QMessageBox.Cancel:
+                # Không đóng cửa sổ, tiếp tục chạy
+                self.status_timer.start(3000)  # Restart timer
                 event.ignore()
                 return
             elif reply == QMessageBox.Yes:
+                # Ngắt kết nối VPN
                 self.vpn_core.disconnect()
         
+        # Đóng cửa sổ
         event.accept()
 
 
