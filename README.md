@@ -1,388 +1,470 @@
 # 🌐 VPN CONNECTION TOOL
 
-## 📝 Mô Tả
+## 📝 Giới Thiệu
 
-**VPN Connection Tool** là công cụ CLI đơn giản giúp bạn kết nối VPN miễn phí chỉ bằng một dòng lệnh. Chỉ cần nhập tên quốc gia, tool sẽ tự động:
-- 🔍 Tìm server VPN tốt nhất
-- ⬇️ Tải cấu hình VPN
-- 🔌 Kết nối tự động đến VPN
-- 🔄 Tự động kết nối lại khi bị ngắt
+**VPN Connection Tool** là công cụ kết nối VPN miễn phí với **3 chế độ sử dụng**:
 
-## ✨ Tính Năng
+1. 🖥️ **GUI (Desktop App)** - Giao diện đồ họa đẹp mắt, dễ sử dụng
+2. ⌨️ **CLI (Command Line)** - Dành cho power users và automation  
+3. 📦 **Standalone .EXE** - File độc lập, không cần cài Python
 
-- 🚀 **Kết nối siêu nhanh**: Chỉ cần 1 lệnh để kết nối VPN
-- 🌍 **Nhiều quốc gia**: Hỗ trợ hơn 50 quốc gia trên toàn cầu
-- 🆓 **Hoàn toàn miễn phí**: Sử dụng VPN Gate (dịch vụ VPN miễn phí công cộng)
-- 🔄 **Auto-reconnect**: Tự động kết nối lại khi mất kết nối
-- 📊 **Kiểm tra trạng thái**: Xem trạng thái kết nối và IP hiện tại
-- 🛡️ **Không cần đăng ký**: Không cần tạo tài khoản hay đăng nhập
-- ⚡ **Server tối ưu**: Tự động chọn server nhanh nhất và ổn định nhất
+---
 
-## 📋 Yêu Cầu
+## ✨ Tính Năng Chính
 
-### Phần mềm cần thiết:
-- **Python 3.8+**
-- **OpenVPN**: Phải cài đặt trước khi sử dụng tool
+- 🌍 **50+ Quốc Gia**: Hỗ trợ kết nối VPN đến hơn 50 quốc gia
+- 🆓 **Hoàn Toàn Miễn Phí**: Sử dụng VPN Gate (public free VPN)
+- 🚀 **Kết Nối Nhanh**: Tự động chọn server tốt nhất
+- 🔄 **Auto-Reconnect**: Tự động kết nối lại khi mất kết nối
+- 📊 **Real-time Status**: Hiển thị trạng thái và IP công khai
+- 🛡️ **Không Cần Đăng Ký**: Không cần tạo tài khoản
 
-### Cài đặt OpenVPN:
+---
 
-**Windows:**
-1. Tải OpenVPN từ: https://openvpn.net/community-downloads/
-2. Chọn bản "Windows Installer (NSIS)"
-3. Cài đặt với các tùy chọn mặc định
+## 🎯 Chọn Chế Độ Phù Hợp
 
-**Kiểm tra OpenVPN đã cài đặt:**
+### 🖥️ GUI Mode (Khuyến Nghị cho người dùng thông thường)
+
+**Phù hợp cho**:
+- ✅ Người dùng muốn giao diện đơn giản, click chuột
+- ✅ Visual learners (thích thấy interface)
+- ✅ Không quen với terminal/command line
+
+**Chạy**:
 ```bash
-# Mở Command Prompt
-"C:\Program Files\OpenVPN\bin\openvpn.exe" --version
+python main_gui.py
 ```
 
-## 🚀 Cài Đặt
+**Chi tiết**: Xem [GUI.md](GUI.md)
 
-### Bước 1: Clone hoặc tải code
+---
+
+### ⌨️ CLI Mode (Dành cho power users)
+
+**Phù hợp cho**:
+- ✅ Power users, developers
+- ✅ Automation, scripting
+- ✅ Remote server (không có GUI)
+
+**Chạy**:
 ```bash
-git clone https://github.com/ntd237/create_vpn_13102025
-cd create_vpn_13102025
+python vpn_tool.py list
+python vpn_tool.py connect JP
 ```
 
-### Bước 2: Cài đặt dependencies
+**Chi tiết**: Xem phần [CLI Usage](#%EF%B8%8F-cli-usage) bên dưới
+
+---
+
+### 📦 Standalone .EXE (Phân phối cho người khác)
+
+**Phù hợp cho**:
+- ✅ Chia sẻ tool cho người không biết Python
+- ✅ Chạy trên máy không có Python
+- ✅ Standalone, all-in-one file
+
+**Tạo .exe**:
+```bash
+python build.py
+```
+
+**Chi tiết**: Xem [BUILD.md](BUILD.md)
+
+---
+
+## 📋 Yêu Cầu Hệ Thống
+
+### Phần Mềm Bắt Buộc:
+- **Python 3.8+** (nếu chạy từ source)
+- **OpenVPN** (bắt buộc cho tất cả modes)
+
+### Hệ Điều Hành:
+- ✅ Windows 10/11 (fully supported)
+- ⚠️ Linux/Mac (experimental)
+
+---
+
+## 🚀 Quick Start
+
+### Cài Đặt
+
+#### Bước 1: Cài OpenVPN
+```
+Download: https://openvpn.net/community-downloads/
+Install to: C:\Program Files\OpenVPN\
+```
+
+#### Bước 2: Clone Repository
+```bash
+git clone https://github.com/ntd237/vpn-connection-tool.git
+cd vpn-connection-tool
+```
+
+#### Bước 3: Cài Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### Bước 3: Kiểm tra cài đặt
+### Chạy GUI (Khuyến Nghị)
 ```bash
-python vpn_tool.py --version
+python main_gui.py
 ```
 
-## 🎮 Sử Dụng
+### Hoặc Chạy CLI
+```bash
+python vpn_tool.py list
+python vpn_tool.py connect JP
+```
 
-### 1️⃣ Xem danh sách quốc gia có VPN
+---
 
+## 🖥️ GUI Usage
+
+### Khởi Động
+```bash
+# Chạy với quyền Administrator (recommended)
+python main_gui.py
+```
+
+### Workflow
+1. **Chọn quốc gia** từ dropdown
+2. Click **"Kết Nối VPN"** (nút xanh lá)
+3. Đợi 10-30 giây
+4. Status → 🟢 **ĐANG KẾT NỐI**
+5. Sử dụng VPN
+6. Click **"Ngắt Kết Nối"** (nút đỏ) khi xong
+
+### Giao Diện
+
+```
+┌─────────────────────────────────────────────┐
+│         🌐 VPN Connection Tool              │
+│      Kết nối VPN miễn phí dễ dàng           │
+├─────────────────────────────────────────────┤
+│  Chọn quốc gia: [Japan (JP) ▼]             │
+│  [🔌 Kết Nối]  [🔄 Refresh]  [⛔ Ngắt]      │
+├─────────────────────────────────────────────┤
+│  Trạng thái: 🟢 ĐANG KẾT NỐI               │
+│  IP: 123.45.67.89                           │
+├─────────────────────────────────────────────┤
+│  Nhật Ký:                                   │
+│  [09:16:35] ✅ Kết nối thành công!          │
+└─────────────────────────────────────────────┘
+```
+
+**Chi tiết đầy đủ**: [GUI.md](GUI.md)
+
+---
+
+## ⌨️ CLI Usage
+
+### 1. Xem Danh Sách Quốc Gia
 ```bash
 python vpn_tool.py list
 ```
 
-**Output mẫu:**
+**Output**:
 ```
-🌍 Đang tải danh sách servers...
-
-📋 Tìm thấy 45 quốc gia:
-
-  • Australia            (AU)  - 5 server(s) - Speed: 15.2 Mbps
-  • Japan                (JP)  - 23 server(s) - Speed: 45.8 Mbps
-  • Korea Republic of    (KR)  - 12 server(s) - Speed: 38.5 Mbps
-  • Thailand             (TH)  - 8 server(s) - Speed: 25.3 Mbps
-  • United Kingdom       (GB)  - 4 server(s) - Speed: 12.7 Mbps
-  • United States        (US)  - 15 server(s) - Speed: 35.2 Mbps
-  • Viet Nam             (VN)  - 3 server(s) - Speed: 8.5 Mbps
+📋 Tìm thấy 10 quốc gia:
+  • Japan           (JP)  - 45 servers - 1279.6 Mbps
+  • Korea           (KR)  - 34 servers - 702.1 Mbps
+  • United States   (US)  - 15 servers - 214.6 Mbps
   ...
 ```
 
-### 2️⃣ Kết nối VPN đến quốc gia
-
+### 2. Kết Nối VPN
 ```bash
 # Cú pháp
-python vpn_tool.py connect <MÃ_QUỐC_GIA>
+python vpn_tool.py connect <COUNTRY_CODE>
 
-# Ví dụ: Kết nối VPN Nhật Bản
-python vpn_tool.py connect JP
-
-# Ví dụ: Kết nối VPN Mỹ
-python vpn_tool.py connect US
-
-# Ví dụ: Kết nối VPN Hàn Quốc
-python vpn_tool.py connect KR
+# Ví dụ
+python vpn_tool.py connect JP    # Nhật Bản
+python vpn_tool.py connect US    # Mỹ
+python vpn_tool.py connect KR    # Hàn Quốc
 ```
 
-**Output mẫu:**
-```
-🔍 Tìm kiếm VPN server tốt nhất cho JP...
-
-Chọn server: vpn123456.opengw.net (Japan)
-Speed: 45.8 Mbps, Uptime: 25 ms
-✅ Đã tải config: vpn_configs\JP_vpn123456.opengw.net.ovpn
-
-🔌 Đang kết nối VPN...
-
-==================================================
-✅ OpenVPN đã được khởi động thành công!
-==================================================
-
-📌 LƯU Ý QUAN TRỌNG:
-   • OpenVPN đang chạy trong background (process độc lập)
-   • Bạn có thể đóng cửa sổ này, VPN vẫn hoạt động
-   • Cửa sổ OpenVPN console sẽ mở riêng (có thể minimize)
-
-💡 LỆNH HỮU ÍCH:
-   • Kiểm tra: python vpn_tool.py status
-   • Ngắt kết nối: python vpn_tool.py disconnect
-
-⏳ Đợi khoảng 10-30 giây để VPN kết nối hoàn tất.
-   Sau đó chạy 'status' để xác nhận.
-```
-
-> 💡 **Giải thích**: OpenVPN sẽ mở một cửa sổ console riêng và chạy trong background. Tool này chỉ khởi động kết nối, sau đó bạn có thể đóng tool. VPN vẫn sẽ tiếp tục hoạt động cho đến khi bạn chạy lệnh `disconnect`.
-
-### 3️⃣ Kết nối với quyền Admin (nếu cần)
-
+**Với Admin rights** (recommended):
 ```bash
-# Nếu kết nối bình thường không được, thử với quyền admin
 python vpn_tool.py connect JP --admin
 ```
 
-> ⚠️ **Lưu ý**: Một số VPN yêu cầu quyền Administrator. Nếu kết nối thất bại, hãy:
-> 1. Mở Command Prompt/PowerShell **với quyền Administrator**
-> 2. Chạy lại lệnh với flag `--admin`
-
-### 4️⃣ Kiểm tra trạng thái kết nối
-
+### 3. Kiểm Tra Trạng Thái
 ```bash
 python vpn_tool.py status
 ```
 
-**Output mẫu:**
+**Output**:
 ```
 📊 TRẠNG THÁI KẾT NỐI VPN
-
 ========================================
 🟢 Trạng thái: ĐANG KẾT NỐI
 🌐 IP công khai: 123.45.67.89
 ========================================
 ```
 
-### 5️⃣ Ngắt kết nối VPN
-
+### 4. Ngắt Kết Nối
 ```bash
 python vpn_tool.py disconnect
 ```
 
-**Output:**
-```
-🔌 Đang ngắt kết nối VPN...
-
-✅ Đã ngắt kết nối VPN!
-```
-
-### 6️⃣ Tự động kết nối lại (Auto-reconnect)
-
+### 5. Auto-Reconnect Mode
 ```bash
-# Tự động kết nối lại khi bị mất kết nối
 python vpn_tool.py auto-reconnect JP
+# Tự động kết nối lại khi bị ngắt
+# Nhấn Ctrl+C để dừng
 ```
 
-**Output:**
-```
-🔄 Chế độ tự động kết nối lại đã BẬT
-   Quốc gia: JP
-   Kiểm tra mỗi: 10s
-   Nhấn Ctrl+C để dừng
+---
 
-✅ VPN vẫn đang kết nối
-✅ VPN vẫn đang kết nối
-⚠️  Mất kết nối! Đang kết nối lại...
-🔌 Đang kết nối VPN...
-✅ Kết nối VPN thành công!
-```
+## 📦 Build Standalone .EXE
 
-> Nhấn **Ctrl+C** để dừng auto-reconnect và ngắt kết nối
-
-### 7️⃣ Hiển thị chi tiết (Verbose mode)
+### Quick Build (3 Steps)
 
 ```bash
-# Thêm flag -v để xem chi tiết quá trình
-python vpn_tool.py connect JP -v
+# 1. Cài dependencies (nếu chưa)
+pip install -r requirements.txt
+
+# 2. Fix pathlib error (nếu dùng conda)
+pip uninstall pathlib pathlib2 pathlib-abc -y
+
+# 3. Build
+python build.py
 ```
 
-## ⚙️ Tùy Chọn CLI
+### Output
+```
+dist/VPN_Tool_Package/
+├── VPN_Connection_Tool.exe  (50-80MB)
+├── config.yaml
+└── README.txt
+```
 
-| Lệnh | Mô tả | Ví dụ |
-|------|-------|-------|
-| `list` | Liệt kê tất cả quốc gia có VPN | `python vpn_tool.py list` |
-| `connect <COUNTRY>` | Kết nối VPN đến quốc gia | `python vpn_tool.py connect US` |
-| `disconnect` | Ngắt kết nối VPN | `python vpn_tool.py disconnect` |
-| `status` | Kiểm tra trạng thái kết nối | `python vpn_tool.py status` |
-| `auto-reconnect <COUNTRY>` | Tự động kết nối lại | `python vpn_tool.py auto-reconnect JP` |
+### Phân Phối
+- Gửi file `.exe` cho người khác
+- Họ chỉ cần:
+  1. Cài OpenVPN
+  2. Run as Administrator
+  3. Sử dụng!
 
-### Flags:
-| Flag | Mô tả |
-|------|-------|
-| `--admin` | Chạy với quyền Administrator |
-| `-v, --verbose` | Hiển thị chi tiết quá trình |
-| `--version` | Hiển thị phiên bản tool |
+**Chi tiết đầy đủ**: [BUILD.md](BUILD.md)
 
-## 🌍 Mã Quốc Gia Phổ Biến
+---
 
-| Quốc gia | Mã | Quốc gia | Mã |
+## 🌍 Quốc Gia Phổ Biến
+
+| Quốc Gia | Mã | Quốc Gia | Mã |
 |----------|-----|----------|-----|
-| 🇺🇸 Mỹ | US | 🇯🇵 Nhật Bản | JP |
-| 🇰🇷 Hàn Quốc | KR | 🇬🇧 Anh | GB |
-| 🇩🇪 Đức | DE | 🇫🇷 Pháp | FR |
-| 🇸🇬 Singapore | SG | 🇹🇭 Thái Lan | TH |
+| 🇯🇵 Nhật Bản | JP | 🇰🇷 Hàn Quốc | KR |
+| 🇺🇸 Mỹ | US | 🇬🇧 Anh | GB |
 | 🇨🇦 Canada | CA | 🇦🇺 Úc | AU |
-| 🇻🇳 Việt Nam | VN | 🇮🇩 Indonesia | ID |
+| 🇸🇬 Singapore | SG | 🇹🇭 Thái Lan | TH |
+| 🇻🇳 Việt Nam | VN | 🇩🇪 Đức | DE |
 
-> Xem danh sách đầy đủ: `python vpn_tool.py list`
+Xem đầy đủ: `python vpn_tool.py list`
 
-## 📊 Ví Dụ Sử Dụng Thực Tế
-
-### Ví dụ 1: Truy cập nội dung từ Nhật Bản
-```bash
-# Kết nối VPN Nhật
-python vpn_tool.py connect JP
-
-# Kiểm tra IP
-python vpn_tool.py status
-
-# Truy cập websites Nhật
-# (Mở browser và vào các trang web)
-
-# Ngắt kết nối
-python vpn_tool.py disconnect
-```
-
-### Ví dụ 2: Gaming với VPN ổn định
-```bash
-# Kết nối với auto-reconnect để game không bị disconnect
-python vpn_tool.py auto-reconnect SG
-
-# Chơi game...
-# Tool sẽ tự động kết nối lại nếu VPN bị ngắt
-
-# Nhấn Ctrl+C khi xong
-```
-
-### Ví dụ 3: Workflow hàng ngày
-```bash
-# Sáng: Kết nối VPN
-python vpn_tool.py connect US -v
-
-# Làm việc cả ngày...
-
-# Tối: Ngắt kết nối
-python vpn_tool.py disconnect
-```
-
-## ⚙️ Cấu Hình Nâng Cao
-
-File `config.yaml` chứa các tùy chọn cấu hình:
-
-```yaml
-# Cấu hình kết nối
-connection:
-  timeout: 30                # Thời gian timeout (giây)
-  max_retries: 3            # Số lần retry
-  auto_reconnect: true      # Tự động reconnect
-  reconnect_interval: 10    # Khoảng thời gian check (giây)
-
-# Đường dẫn
-paths:
-  config_dir: "vpn_configs"  # Thư mục lưu .ovpn files
-  log_file: "vpn_tool.log"   # File log
-
-# Logging
-logging:
-  level: "INFO"              # DEBUG, INFO, WARNING, ERROR
-  format: "%(asctime)s - %(levelname)s - %(message)s"
-
-# VPN Settings
-vpn:
-  protocol: "udp"            # udp hoặc tcp
-  require_admin: false       # Thử không dùng admin trước
-```
-
-**Chỉnh sửa config:**
-1. Mở file `config.yaml`
-2. Thay đổi các giá trị theo nhu cầu
-3. Lưu file và chạy lại tool
+---
 
 ## 🛠️ Troubleshooting
 
-### ❌ Lỗi: "OpenVPN chưa được cài đặt"
-**Nguyên nhân**: Chưa cài OpenVPN hoặc không tìm thấy trong PATH
+### ❌ "OpenVPN chưa được cài đặt"
 
-**Giải pháp:**
-1. Cài đặt OpenVPN: https://openvpn.net/community-downloads/
-2. Đảm bảo cài vào thư mục mặc định: `C:\Program Files\OpenVPN\`
-3. Khởi động lại Command Prompt
+**Giải pháp**:
+1. Cài OpenVPN: https://openvpn.net/community-downloads/
+2. Restart terminal/app
 
-### ❌ Lỗi: "Không tìm thấy servers cho quốc gia XXX"
-**Nguyên nhân**: Mã quốc gia không đúng hoặc không có server
+### ❌ "Kết nối thất bại" hoặc "Disconnect ngay"
 
-**Giải pháp:**
-1. Chạy `python vpn_tool.py list` để xem danh sách
-2. Sử dụng đúng mã 2 ký tự (VD: US, JP, KR)
-3. Thử quốc gia khác nếu không có server
+**Nguyên nhân**: Thiếu quyền Administrator
 
-### ❌ Lỗi: "Kết nối VPN thất bại" hoặc "OpenVPN bị disconnect ngay"
-**Nguyên nhân**: Thiếu quyền Administrator, firewall chặn, hoặc config không hợp lệ
-
-**Giải pháp:**
-
-1. **Chạy với quyền Administrator** (Giải pháp chính):
-   ```bash
-   # Chuột phải vào PowerShell/CMD → "Run as Administrator"
-   # Sau đó chạy:
-   python vpn_tool.py connect US --admin
-   ```
-
-2. **Kiểm tra OpenVPN console**:
-   - Khi connect, một cửa sổ console sẽ mở ra
-   - Xem log để biết lỗi cụ thể
-   - Thường gặp: "ERROR: Cannot open TUN/TAP dev" → cần admin rights
-
-3. **Tạm tắt Firewall/Antivirus** để test
-
-4. **Thử server khác**: 
-   ```bash
-   python vpn_tool.py connect JP
-   ```
-
-### ⚠️ VPN kết nối nhưng không truy cập được Internet
-**Nguyên nhân**: DNS hoặc routing issue
-
-**Giải pháp:**
-1. Ngắt và kết nối lại: 
-   ```bash
-   python vpn_tool.py disconnect
-   python vpn_tool.py connect US
-   ```
-2. Kiểm tra DNS settings trong Windows
-3. Flush DNS cache: `ipconfig /flushdns`
-
-### 🐌 VPN chậm
-**Giải pháp:**
-1. Chọn quốc gia gần hơn
-2. Chạy `python vpn_tool.py list` và chọn server có Speed cao
-3. Thử kết nối vào thời điểm khác (ít người dùng hơn)
-
-### 📝 Xem log chi tiết
+**Giải pháp**:
 ```bash
-# Xem file log
-type vpn_tool.log
+# GUI: Chuột phải PowerShell → "Run as Administrator"
+python main_gui.py
 
-# Hoặc chạy với verbose
-python vpn_tool.py connect US -v
+# CLI: Thêm --admin flag
+python vpn_tool.py connect JP --admin
 ```
+
+### ❌ GUI: Dropdown không load quốc gia
+
+**Giải pháp**:
+1. Check internet connection
+2. Click nút "Làm Mới"
+3. Tắt VPN/Proxy khác nếu đang bật
+
+### ❌ Build .exe: "pathlib package is obsolete"
+
+**Giải pháp**:
+```bash
+pip uninstall pathlib pathlib2 pathlib-abc -y
+python build.py
+```
+
+### ❌ VPN kết nối nhưng không truy cập được Internet
+
+**Giải pháp**:
+```bash
+# Ngắt và kết nối lại
+python vpn_tool.py disconnect
+python vpn_tool.py connect JP
+
+# Hoặc flush DNS
+ipconfig /flushdns
+```
+
+**Xem thêm troubleshooting**: [INSTALL.md](INSTALL.md)
+
+---
+
+## 📊 So Sánh Các Chế Độ
+
+| Feature | GUI | CLI | .EXE |
+|---------|-----|-----|------|
+| **Dễ sử dụng** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Visual feedback** | ✅ Real-time | ❌ Text only | ✅ Real-time |
+| **Automation** | ❌ | ✅ | ❌ |
+| **Cần Python** | ✅ | ✅ | ❌ |
+| **Cần OpenVPN** | ✅ | ✅ | ✅ |
+| **Tốc độ** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| **File size** | ~2MB | ~2MB | 50-80MB |
+
+---
+
+## 📁 Cấu Trúc Dự Án
+
+```
+create_vpn/
+├── main_gui.py          # GUI entry point
+├── vpn_gui.py           # GUI implementation (PyQt5)
+├── vpn_tool.py          # CLI interface
+├── core.py              # VPN logic (shared)
+├── utils.py             # Helper utilities (shared)
+├── config.yaml          # Configuration
+├── requirements.txt     # Python dependencies
+│
+├── build.py             # Build script for .exe
+├── vpn_tool.spec        # PyInstaller config
+│
+├── README.md            # This file
+├── GUI.md               # GUI documentation
+├── BUILD.md             # Build documentation
+├── INSTALL.md           # Installation guide
+└── QUICKSTART.md        # Quick reference
+```
+
+---
+
+## ⚙️ Configuration
+
+File `config.yaml` chứa cấu hình:
+
+```yaml
+# VPN Provider
+provider: "vpngate"
+
+# Connection Settings
+connection:
+  timeout: 30
+  max_retries: 3
+  auto_reconnect: true
+  reconnect_interval: 10
+
+# Paths
+paths:
+  config_dir: "vpn_configs"
+  log_file: "vpn_tool.log"
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+```
+
+---
 
 ## 🔒 Bảo Mật & Lưu Ý
 
-### ⚠️ Quan trọng:
+### ⚠️ Quan Trọng
+
 - ✅ VPN Gate là dịch vụ miễn phí, community-driven
-- ⚠️ **KHÔNG** sử dụng cho các giao dịch nhạy cảm (banking, thanh toán)
-- ⚠️ Server do tình nguyện viên vận hành, có thể bị ngắt bất kỳ lúc nào
-- ✅ Tốt cho: truy cập nội dung bị chặn địa lý, bảo vệ privacy cơ bản
-- ❌ Không phù hợp cho: công việc quan trọng, giao dịch tài chính
+- ⚠️ **KHÔNG** sử dụng cho banking, thanh toán nhạy cảm
+- ⚠️ Server do tình nguyện viên vận hành
+- ✅ Tốt cho: xem video, browse web, bypass geo-restriction
+- ❌ Không phù hợp cho: công việc quan trọng, tài chính
 
-### 🛡️ Khuyến nghị:
-- Chỉ sử dụng cho browsing web, xem video, download thông thường
-- Không gửi thông tin nhạy cảm (password, credit card) qua VPN miễn phí
-- Sử dụng HTTPS cho các trang web quan trọng
-- Đối với công việc nghiêm túc, hãy dùng VPN trả phí đáng tin cậy
+### 🛡️ Khuyến Nghị
 
-## 📄 Giấy Phép
+- Chỉ dùng cho browsing, streaming thông thường
+- Không gửi thông tin nhạy cảm qua VPN miễn phí
+- Luôn sử dụng HTTPS cho sites quan trọng
+- Đối với công việc nghiêm túc → dùng VPN trả phí
+
+---
+
+## 📚 Documentation
+
+### User Guides
+- 📖 **README.md** - Tổng quan (file này)
+- 🖥️ **GUI.md** - Hướng dẫn GUI chi tiết
+- 📦 **BUILD.md** - Hướng dẫn build .exe
+- ⚡ **QUICKSTART.md** - Quick reference
+- 🔧 **INSTALL.md** - Installation & troubleshooting
+
+### Developer Docs
+- 📝 **CLAUDE.md** - AI coding guidelines
+- 📋 **CHANGELOG.md** - Version history
+- 🏗️ **PROJECT_SUMMARY.md** - Project overview
+
+---
+
+## 🎓 Examples
+
+### Example 1: Quick VPN to Japan (GUI)
+```bash
+python main_gui.py
+# → Chọn "Japan (JP)"
+# → Click "Kết Nối VPN"
+# → Done!
+```
+
+### Example 2: Quick VPN to US (CLI)
+```bash
+python vpn_tool.py connect US --admin
+# → Kết nối tự động
+```
+
+### Example 3: Build và phân phối
+```bash
+python build.py
+# → dist/VPN_Tool_Package/VPN_Connection_Tool.exe
+# → Gửi file .exe cho người khác
+```
+
+### Example 4: Auto-reconnect mode
+```bash
+python vpn_tool.py auto-reconnect JP
+# → Tự động kết nối lại khi ngắt
+# → Nhấn Ctrl+C để dừng
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open Pull Request
+
+---
+
+## 📄 License
 
 MIT License - Tự do sử dụng, chỉnh sửa, phân phối
+
+---
 
 ## 👤 Tác Giả
 
@@ -390,18 +472,37 @@ MIT License - Tự do sử dụng, chỉnh sửa, phân phối
 - **Email**: ntd237.work@gmail.com
 - **GitHub**: https://github.com/ntd237
 
+---
+
 ## 🙏 Credits
 
-- **VPN Gate**: https://www.vpngate.net/ - Dịch vụ VPN miễn phí công cộng
-- **OpenVPN**: https://openvpn.net/ - VPN client open-source
-
-## 📞 Hỗ Trợ
-
-Nếu gặp vấn đề, vui lòng:
-1. Kiểm tra phần Troubleshooting ở trên
-2. Xem log file: `vpn_tool.log`
-3. Liên hệ qua email: ntd237.work@gmail.com
+- **VPN Gate**: https://www.vpngate.net/ - Free VPN service
+- **OpenVPN**: https://openvpn.net/ - VPN client
+- **PyQt5**: GUI framework
+- **PyInstaller**: .exe packaging
 
 ---
+
+## 📞 Support
+
+### Cần Giúp Đỡ?
+
+1. 📖 Check documentation files (GUI.md, BUILD.md, INSTALL.md)
+2. 🐛 Check troubleshooting sections
+3. 📝 Check log file: `vpn_tool.log`
+4. 💬 Email: ntd237.work@gmail.com
+
+### Quick Links
+
+- [GUI Documentation](GUI.md)
+- [Build Guide](BUILD.md)
+- [Installation Guide](INSTALL.md)
+- [Quick Start](QUICKSTART.md)
+
+---
+
+**Version**: 2.0.3  
+**Last Updated**: 2025-01-13  
+**Status**: ✅ Production Ready
 
 **Happy VPN-ing! 🚀**
