@@ -1,0 +1,9 @@
+# === DEPENDENCIES TỐI THIỂU ===
+
+# Core dependencies
+requests>=2.28.0        # Tải config từ VPN provider
+pyyaml>=6.0            # Đọc file config.yaml
+psutil>=5.9.0          # Kiểm tra process và network status
+
+# Optional (nếu cần tích hợp OpenVPN)
+python-openvpn>=1.0.0  # Wrapper cho OpenVPN

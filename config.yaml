@@ -1,0 +1,26 @@
+# === CẤU HÌNH VPN TOOL ===
+
+# VPN Provider
+provider: "protonvpn"  # Sử dụng ProtonVPN Free
+
+# Cấu hình kết nối
+connection:
+  timeout: 30  # Giây
+  max_retries: 3
+  auto_reconnect: true
+  reconnect_interval: 10  # Giây
+
+# Thư mục lưu trữ
+paths:
+  config_dir: "vpn_configs"  # Thư mục chứa file .ovpn
+  log_file: "vpn_tool.log"
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(levelname)s - %(message)s"
+
+# VPN Settings
+vpn:
+  protocol: "udp"  # udp hoặc tcp
+  require_admin: false  # Thử kết nối không cần admin trước
