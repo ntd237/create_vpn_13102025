@@ -16,7 +16,9 @@ logger = logging.getLogger(__name__)
 
 # === CẤU HÌNH ===
 PROTONVPN_API = "https://api.protonvpn.ch/vpn/logicals"
-FREEVPN_API = "https://www.vpngate.net/api/iphone/"  # Backup: VPN Gate (public free VPN)
+# VPN Gate API - Chỉ trả về top 100 servers tốt nhất (để tránh DoS)
+# Danh sách quốc gia thay đổi theo thời gian tùy vào servers nào online
+FREEVPN_API = "https://www.vpngate.net/api/iphone/"
 CONFIG_EXTENSION = ".ovpn"
 
 
@@ -61,11 +63,17 @@ class VPNCore:
             # Parse CSV response (skip header)
             lines = response.text.strip().split('\n')
             servers = []
-            
+
             # Skip first 2 lines (headers) and last line (*END)
             for line in lines[2:-1]:
                 parts = line.split(',')
+                # Fix: CSV format có thể có dấu phẩy trong Message field
+                # Cần ít nhất 15 parts, nhưng config_data có thể bị split thành nhiều parts
                 if len(parts) >= 15:
+                    # Join tất cả parts từ index 14 trở đi làm config_data
+                    # Vì Base64 config có thể chứa dấu phẩy hoặc bị split
+                    config_data = ','.join(parts[14:]) if len(parts) > 14 else parts[14]
+
                     servers.append({
                         'hostname': parts[0],
                         'ip': parts[1],
@@ -74,9 +82,9 @@ class VPNCore:
                         'speed': int(parts[4]) if parts[4].isdigit() else 0,
                         'uptime': int(parts[10]) if parts[10].isdigit() else 0,
                         'score': int(parts[2]) if parts[2].isdigit() else 0,
-                        'config_data': parts[14]  # Base64 encoded .ovpn
+                        'config_data': config_data  # Base64 encoded .ovpn (joined)
                     })
-            
+
             # Sắp xếp theo tốc độ và uptime
             servers.sort(key=lambda x: (x['speed'], x['uptime']), reverse=True)
             
@@ -123,7 +131,10 @@ class VPNCore:
             if country_code not in countries:
                 logger.error(f"Không tìm thấy servers cho quốc gia: {country_code}")
                 available = ', '.join(sorted(countries.keys()))
-                logger.info(f"Các quốc gia khả dụng: {available}")
+                logger.info(f"📍 Các quốc gia khả dụng hiện tại ({len(countries)}): {available}")
+                logger.info("💡 Lưu ý: VPN Gate API chỉ trả về top 100 servers tốt nhất.")
+                logger.info("   Danh sách quốc gia thay đổi theo thời gian tùy servers nào online.")
+                logger.info("   Thử lại sau hoặc chọn quốc gia khác.")
                 return None
             
             # Chọn server tốt nhất
@@ -152,34 +163,54 @@ class VPNCore:
     def connect(self, config_path: str, require_admin: bool = False) -> bool:
         """
         Kết nối VPN sử dụng config file.
-        
+
         Args:
             config_path: Đường dẫn file .ovpn
             require_admin: Có yêu cầu quyền admin không
-            
+
         Returns:
             True nếu thành công, False nếu thất bại
         """
         if not os.path.exists(config_path):
             logger.error(f"File config không tồn tại: {config_path}")
             return False
-        
+
         try:
+            # Fix: Disconnect kết nối cũ trước khi connect mới
+            # Nguyên nhân: Nếu có connection cũ đang chạy (dù failed), nó sẽ conflict với connection mới
+            if self.is_connected() or self._has_openvpn_process():
+                logger.info("Đang ngắt kết nối VPN cũ...")
+                self.disconnect()
+                time.sleep(2)  # Đợi process cũ terminate hoàn toàn
+
             # Kiểm tra OpenVPN có được cài đặt
             openvpn_cmd = self._find_openvpn()
             if not openvpn_cmd:
                 logger.error("❌ OpenVPN chưa được cài đặt!")
                 logger.info("Vui lòng cài đặt OpenVPN: https://openvpn.net/community-downloads/")
                 return False
-            
+
             logger.info(f"Đang kết nối VPN: {config_path}")
-            
-            # Tạo lệnh kết nối
-            cmd = [openvpn_cmd, '--config', config_path]
-            
+
+            # Tạo lệnh kết nối với cipher compatibility
+            # Fix: Thêm --data-ciphers để hỗ trợ cả legacy (AES-128-CBC) và modern ciphers
+            # Nguyên nhân: VPN Gate servers cũ dùng AES-128-CBC, OpenVPN 2.6+ mặc định chỉ dùng modern ciphers
+            cmd = [
+                openvpn_cmd,
+                '--config', config_path,
+                '--data-ciphers', 'AES-128-CBC:AES-256-CBC:AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305',
+                '--cipher', 'AES-128-CBC'  # Fallback cipher cho compatibility
+            ]
+
             if require_admin:
                 logger.warning("⚠️  Cần quyền Administrator để kết nối VPN")
-            
+
+            # Tạo log file để capture OpenVPN output
+            self.log_file_path = os.path.join(self.config_dir, 'openvpn_connect.log')
+            log_file = open(self.log_file_path, 'w')
+
+            logger.info(f"📝 OpenVPN log: {self.log_file_path}")
+
             # Chạy OpenVPN process ẩn (không hiện console)
             # Trên Windows: CREATE_NO_WINDOW để chạy ngầm
             if os.name == 'nt':  # Windows
@@ -188,38 +219,43 @@ class VPNCore:
                 self.current_process = subprocess.Popen(
                     cmd,
                     creationflags=subprocess.CREATE_NEW_PROCESS_GROUP | CREATE_NO_WINDOW,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL
+                    stdout=log_file,
+                    stderr=subprocess.STDOUT  # Redirect stderr to stdout (log file)
                 )
             else:  # Linux/Mac
                 self.current_process = subprocess.Popen(
                     cmd,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
+                    stdout=log_file,
+                    stderr=subprocess.STDOUT,
                     start_new_session=True
                 )
-            
+
             # Lưu PID để quản lý sau
             with open(self.pid_file, 'w') as f:
                 f.write(str(self.current_process.pid))
-            
+
             logger.info(f"Đã khởi động OpenVPN process (PID: {self.current_process.pid})")
-            
-            # Đợi một chút để kiểm tra kết nối
-            logger.info("Đang chờ OpenVPN khởi động...")
-            for i in range(10):  # Check trong 10 giây
+
+            # Đợi và verify kết nối thực sự thành công
+            logger.info("Đang chờ OpenVPN kết nối...")
+            for i in range(30):  # Tăng timeout lên 30 giây để đủ thời gian kết nối
                 time.sleep(1)
-                if self.is_connected():
-                    logger.info("✅ Đã kết nối VPN thành công!")
-                    return True
+
                 # Kiểm tra process còn chạy không
                 if self.current_process.poll() is not None:
-                    logger.error("OpenVPN process đã dừng. Kiểm tra quyền admin hoặc config file.")
+                    logger.error("OpenVPN process đã dừng. Kiểm tra log để biết chi tiết.")
+                    self._show_connection_error()
                     return False
-            
-            logger.warning("⚠️  OpenVPN đang chạy nhưng chưa kết nối xong.")
-            logger.info("🔍 Chạy 'vpn_tool.py status' sau ít phút để kiểm tra.")
-            return True
+
+                # Verify connection thực sự thành công bằng cách parse log
+                if self._verify_connection_from_log():
+                    logger.info("✅ Đã kết nối VPN thành công!")
+                    return True
+
+            # Timeout nhưng process vẫn chạy - có thể đang kết nối
+            logger.warning("⚠️  Timeout chờ kết nối. Kiểm tra log để biết chi tiết.")
+            self._show_connection_error()
+            return False
                 
         except Exception as e:
             logger.error(f"Lỗi khi kết nối: {e}")
@@ -266,25 +302,35 @@ class VPNCore:
     
     def is_connected(self) -> bool:
         """
-        Kiểm tra VPN có đang kết nối không.
-        
+        Kiểm tra VPN có đang kết nối THỰC SỰ không.
+
+        Fix: Không chỉ check process running, mà verify connection thực sự established
+        bằng cách parse OpenVPN log tìm "Initialization Sequence Completed"
+
         Returns:
-            True nếu đang kết nối
+            True nếu đang kết nối THỰC SỰ
         """
         # Kiểm tra process còn chạy
+        process_running = False
         if self.current_process and self.current_process.poll() is None:
-            return True
-        
-        # Kiểm tra có OpenVPN process nào đang chạy
-        import psutil
-        for proc in psutil.process_iter(['name']):
-            try:
-                if 'openvpn' in proc.info['name'].lower():
-                    return True
-            except (psutil.NoSuchProcess, psutil.AccessDenied):
-                pass
-        
-        return False
+            process_running = True
+        else:
+            # Kiểm tra có OpenVPN process nào đang chạy
+            import psutil
+            for proc in psutil.process_iter(['name']):
+                try:
+                    if 'openvpn' in proc.info['name'].lower():
+                        process_running = True
+                        break
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    pass
+
+        # Nếu process không chạy, chắc chắn không connected
+        if not process_running:
+            return False
+
+        # Process đang chạy - verify connection thực sự thành công từ log
+        return self._verify_connection_from_log()
     
     def get_status(self) -> Dict:
         """
@@ -331,16 +377,32 @@ class VPNCore:
         
         return None
     
+    def _has_openvpn_process(self) -> bool:
+        """
+        Kiểm tra có OpenVPN process nào đang chạy không.
+
+        Returns:
+            True nếu có process OpenVPN đang chạy
+        """
+        import psutil
+        for proc in psutil.process_iter(['name']):
+            try:
+                if 'openvpn' in proc.info['name'].lower():
+                    return True
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                pass
+        return False
+
     def _kill_openvpn_processes(self) -> int:
         """
         Kill tất cả OpenVPN processes.
-        
+
         Returns:
             Số process đã kill
         """
         import psutil
         killed = 0
-        
+
         for proc in psutil.process_iter(['name', 'pid']):
             try:
                 if 'openvpn' in proc.info['name'].lower():
@@ -348,13 +410,13 @@ class VPNCore:
                     killed += 1
             except (psutil.NoSuchProcess, psutil.AccessDenied):
                 pass
-        
+
         return killed
     
     def _get_public_ip(self) -> Optional[str]:
         """
         Lấy địa chỉ IP công khai hiện tại.
-        
+
         Returns:
             IP address hoặc None
         """
@@ -363,3 +425,58 @@ class VPNCore:
             return response.json().get('ip')
         except:
             return None
+
+    def _verify_connection_from_log(self) -> bool:
+        """
+        Verify kết nối VPN thực sự thành công bằng cách parse OpenVPN log.
+
+        Returns:
+            True nếu connection established, False nếu chưa hoặc có lỗi
+        """
+        if not hasattr(self, 'log_file_path') or not os.path.exists(self.log_file_path):
+            return False
+
+        try:
+            with open(self.log_file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                log_content = f.read()
+
+            # Check for successful connection indicators
+            # "Initialization Sequence Completed" là dấu hiệu VPN đã kết nối thành công
+            if 'Initialization Sequence Completed' in log_content:
+                return True
+
+            # Check for fatal errors
+            if 'OPTIONS ERROR' in log_content or 'Failed to open tun/tap interface' in log_content:
+                return False
+
+            return False
+
+        except Exception as e:
+            logger.debug(f"Không thể đọc log file: {e}")
+            return False
+
+    def _show_connection_error(self):
+        """
+        Hiển thị lỗi kết nối từ OpenVPN log.
+        """
+        if not hasattr(self, 'log_file_path') or not os.path.exists(self.log_file_path):
+            return
+
+        try:
+            with open(self.log_file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                log_content = f.read()
+
+            # Tìm các error messages quan trọng
+            error_lines = []
+            for line in log_content.split('\n'):
+                if any(keyword in line for keyword in ['ERROR', 'FATAL', 'Failed', 'Cannot']):
+                    error_lines.append(line.strip())
+
+            if error_lines:
+                logger.error("❌ Lỗi kết nối VPN:")
+                for error in error_lines[-5:]:  # Hiển thị 5 lỗi gần nhất
+                    logger.error(f"   {error}")
+                logger.info(f"\n📝 Xem chi tiết tại: {self.log_file_path}")
+
+        except Exception as e:
+            logger.debug(f"Không thể đọc log file: {e}")

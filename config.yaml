@@ -23,4 +23,4 @@ logging:
 # VPN Settings
 vpn:
   protocol: "udp"  # udp hoặc tcp
-  require_admin: false  # Thử kết nối không cần admin trước
+  require_admin: true  # Yêu cầu quyền admin để kết nối

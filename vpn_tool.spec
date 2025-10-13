@@ -22,15 +22,79 @@ a = Analysis(
         'psutil',
     ],
     hookspath=[],
-    hooksconfig={},
+    hooksconfig={
+        # Disable conda support để tránh MemoryError
+        'conda': {'enabled': False},
+    },
     runtime_hooks=[],
     excludes=[
+        # === Data Science & ML (KHÔNG CẦN) ===
         'matplotlib',
         'numpy',
         'pandas',
         'scipy',
-        'PIL',
+        'sklearn',
+        'tensorflow',
+        'torch',
+        'keras',
+
+        # === GUI Frameworks Khác (KHÔNG CẦN) ===
         'tkinter',
+        'wx',
+        'PySide2',
+        'PySide6',
+        'PyQt6',
+
+        # === Development Tools (KHÔNG CẦN) ===
+        'IPython',
+        'jupyter',
+        'notebook',
+        'jupyterlab',
+        'sphinx',
+        'pytest',
+        'unittest',
+        'doctest',
+        'pdb',
+        'pydoc',
+
+        # === Build Tools (KHÔNG CẦN SAU KHI BUILD) ===
+        'setuptools',
+        'wheel',
+        'pip',
+        'distutils',
+        'pkg_resources',
+
+        # === Image Processing (KHÔNG CẦN) ===
+        'PIL',
+        'Pillow',
+        'cv2',
+        'imageio',
+
+        # === Web Frameworks (KHÔNG CẦN) ===
+        'flask',
+        'django',
+        'fastapi',
+        'tornado',
+
+        # === Database (KHÔNG CẦN) ===
+        'sqlalchemy',
+        'sqlite3',
+        'pymongo',
+        'redis',
+
+        # === Cryptography Submodules (KHÔNG CẦN) ===
+        'cryptography.hazmat.primitives.asymmetric.x25519',
+        'cryptography.hazmat.primitives.asymmetric.x448',
+        'cryptography.hazmat.primitives.asymmetric.ed25519',
+        'cryptography.hazmat.primitives.asymmetric.ed448',
+
+        # === Other Unused (KHÔNG CẦN) ===
+        'xml',
+        'xmlrpc',
+        'email',
+        'multiprocessing',
+        'asyncio',
+        'concurrent',
     ],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,

@@ -40,6 +40,11 @@ def main():
     print("\n" + "="*60)
     print("VPN CONNECTION TOOL - BUILD SCRIPT")
     print("="*60)
+
+    # Set environment variables để tránh MemoryError với Conda
+    os.environ['PYINSTALLER_COMPILE_BOOTLOADER'] = '0'
+    os.environ['PYINSTALLER_DISABLE_CONDA_SUPPORT'] = '1'
+    print("\n💡 Đã set environment variables để tối ưu memory usage")
     
     # Bước 1: Check dependencies
     print_step(1, "Kiểm tra dependencies")
@@ -73,13 +78,51 @@ def main():
     
     # Bước 4: Build với PyInstaller
     print_step(4, "Build file .exe với PyInstaller")
-    
-    if not run_command(
+
+    # Try với spec file trước
+    success = run_command(
         "pyinstaller vpn_tool.spec --clean",
         "Build .exe từ spec file"
-    ):
-        print("❌ Build thất bại!")
-        sys.exit(1)
+    )
+
+    # Nếu fail, thử alternative method
+    if not success:
+        print("\n⚠️ Build với spec file thất bại!")
+        print("💡 Đang thử alternative method (direct build)...\n")
+
+        # Alternative: Build trực tiếp với command line options
+        alt_cmd = (
+            "pyinstaller --onefile --windowed "
+            "--name VPN_Connection_Tool "
+            "--add-data config.yaml;. "
+            "--hidden-import PyQt5.QtCore "
+            "--hidden-import PyQt5.QtGui "
+            "--hidden-import PyQt5.QtWidgets "
+            "--hidden-import requests "
+            "--hidden-import yaml "
+            "--hidden-import psutil "
+            "--exclude-module matplotlib "
+            "--exclude-module numpy "
+            "--exclude-module pandas "
+            "--exclude-module scipy "
+            "--exclude-module PIL "
+            "--exclude-module tkinter "
+            "--exclude-module IPython "
+            "--exclude-module jupyter "
+            "--uac-admin "
+            "--clean "
+            "main_gui.py"
+        )
+
+        if not run_command(alt_cmd, "Build .exe với alternative method"):
+            print("❌ Build thất bại với cả 2 methods!")
+            print("\n💡 Gợi ý:")
+            print("   1. Tăng RAM available (đóng apps khác)")
+            print("   2. Tạo virtual environment mới với ít packages hơn")
+            print("   3. Sử dụng Python environment thay vì Conda")
+            sys.exit(1)
+
+        print("✅ Build thành công với alternative method!")
     
     # Bước 5: Verify output
     print_step(5, "Kiểm tra kết quả")

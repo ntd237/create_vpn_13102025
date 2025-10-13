@@ -424,8 +424,10 @@ class VPNMainWindow(QMainWindow):
         self.country_combo.setEnabled(True)
         self.connect_btn.setEnabled(True)
         self.refresh_btn.setEnabled(True)
-        
+
         self.log(f"✅ Đã tải {len(countries)} quốc gia khả dụng")
+        self.log("💡 Lưu ý: VPN Gate API chỉ trả về top 100 servers tốt nhất")
+        self.log("   Danh sách quốc gia thay đổi theo thời gian. Nhấn 'Làm Mới' để cập nhật.")
     
     def on_countries_error(self, error):
         """Callback khi load countries thất bại."""
@@ -487,12 +489,13 @@ class VPNMainWindow(QMainWindow):
         
         # Update status ngay
         self.update_status()
-        
-        # Show notification
-        if success:
-            QMessageBox.information(self, "Thành công", message)
-        else:
-            QMessageBox.warning(self, "Thất bại", message)
+
+        # KHÔNG hiển thị popup notification
+        # Trạng thái đã được hiển thị trong cửa sổ chính và log
+        # if success:
+        #     QMessageBox.information(self, "Thành công", message)
+        # else:
+        #     QMessageBox.warning(self, "Thất bại", message)
     
     
     def update_status(self):
