@@ -162,7 +162,7 @@ python main_gui.py
 ```
 ┌─────────────────────────────────────────────┐
 │         🌐 VPN Connection Tool              │
-│      Kết nối VPN miễn phí - Author: NTD237           │
+│      Kết nối VPN miễn phí - Author: NTD237  │
 ├─────────────────────────────────────────────┤
 │  Chọn quốc gia: [Japan (JP) ▼]             │
 │  [🔌 Kết Nối]  [🔄 Refresh]  [⛔ Ngắt]      │
