@@ -41,6 +41,7 @@
 
 ### Bước 1: Clone hoặc tải code
 ```bash
+git clone https://github.com/ntd237/create_vpn_13102025
 cd create_vpn_13102025
 ```
 
