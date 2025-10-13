@@ -96,8 +96,8 @@ Install to: C:\Program Files\OpenVPN\
 
 #### Bước 2: Clone Repository
 ```bash
-git clone https://github.com/ntd237/vpn-connection-tool.git
-cd vpn-connection-tool
+git clone https://github.com/ntd237/create_vpn_13102025.git
+cd create_vpn_13102025
 ```
 
 #### Bước 3: Cài Dependencies
@@ -502,7 +502,7 @@ MIT License - Tự do sử dụng, chỉnh sửa, phân phối
 ---
 
 **Version**: 2.0.3  
-**Last Updated**: 2025-01-13  
+**Last Updated**: 2025-10-13  
 **Status**: ✅ Production Ready
 
 **Happy VPN-ing! 🚀**
