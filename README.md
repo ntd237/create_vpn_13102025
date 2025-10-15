@@ -94,8 +94,8 @@ Install to: C:\Program Files\OpenVPN\
 
 #### Bước 2: Clone Repository
 ```bash
-git clone https://github.com/ntd237/create_vpn_13102025.git
-cd create_vpn_13102025
+git clone https://github.com/ntd237/vpn_connection_tool_13102025.git
+cd vpn_connection_tool_13102025
 ```
 
 #### Bước 3: Cài Dependencies
@@ -336,7 +336,7 @@ ipconfig /flushdns
 ## 📁 Cấu Trúc Dự Án
 
 ```
-create_vpn_13102025/
+vpn_connection_tool_13102025/
 ├── main_gui.py          # GUI entry point
 ├── vpn_gui.py           # GUI implementation (PyQt5)
 ├── vpn_tool.py          # CLI interface
