@@ -343,7 +343,7 @@ ipconfig /flushdns
 | **Cần Python** | ✅ | ✅ | ❌ |
 | **Cần OpenVPN** | ✅ | ✅ | ✅ |
 | **Tốc độ** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| **File size** | ~2MB | ~2MB | 50-80MB |
+| **File size** | ~2MB | ~2MB | 35-45MB |
 
 ---
 
