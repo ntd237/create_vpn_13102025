@@ -398,11 +398,12 @@ Contributions are welcome! Please:
 
 Copyright (c) 2025 ntd237
 
-Quyền sử dụng, sao chép, chỉnh sửa, gộp, công bố, phân phối, cấp phép lại và/hoặc bán bản sao của phần mềm này **chỉ được phép thực hiện khi có sự đồng ý bằng văn bản của tác giả (ntd237)**, và cho phép những người được cấp quyền thực hiện các hành động đó, với điều kiện sau đây:
+Permission is hereby granted **only upon obtaining explicit authorization from the author (ntd237)**, to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-Thông báo bản quyền và điều khoản cấp phép này phải được bao gồm trong tất cả các bản sao hoặc phần đáng kể của phần mềm.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-PHẦN MỀM NÀY ĐƯỢC CUNG CẤP “NGUYÊN TRẠNG”, KHÔNG CÓ BẤT KỲ BẢO ĐẢM NÀO, DÙ RÕ RÀNG HAY NGỤ Ý, BAO GỒM NHƯNG KHÔNG GIỚI HẠN Ở CÁC BẢO ĐẢM VỀ KHẢ NĂNG MUA BÁN, PHÙ HỢP VỚI MỤC ĐÍCH CỤ THỂ VÀ KHÔNG VI PHẠM. TRONG MỌI TRƯỜNG HỢP, TÁC GIẢ HOẶC CHỦ SỞ HỮU BẢN QUYỀN SẼ KHÔNG CHỊU TRÁCH NHIỆM VỀ BẤT KỲ KHIẾU NẠI, THIỆT HẠI HOẶC TRÁCH NHIỆM NÀO KHÁC, DÙ TRONG HÀNH ĐỘNG HỢP ĐỒNG, HÀNH VI DÂN SỰ HAY CÁCH KHÁC, PHÁT SINH TỪ HOẶC LIÊN QUAN ĐẾN PHẦN MỀM HOẶC VIỆC SỬ DỤNG PHẦN MỀM NÀY.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 
 
 ---
