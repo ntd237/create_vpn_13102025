@@ -253,7 +253,7 @@ python build.py
 ### Output
 ```
 dist/VPN_Tool_Package/
-├── VPN_Connection_Tool.exe  (50-80MB)
+├── VPN_Connection_Tool.exe  (35-45MB)
 ├── config.yaml
 └── README.txt
 ```
