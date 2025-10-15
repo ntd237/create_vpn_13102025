@@ -396,7 +396,14 @@ Contributions are welcome! Please:
 
 ## 📄 License
 
-MIT License - Tự do sử dụng, chỉnh sửa, phân phối
+Copyright (c) 2025 ntd237
+
+Quyền sử dụng, sao chép, chỉnh sửa, gộp, công bố, phân phối, cấp phép lại và/hoặc bán bản sao của phần mềm này **chỉ được phép thực hiện khi có sự đồng ý bằng văn bản của tác giả (ntd237)**, và cho phép những người được cấp quyền thực hiện các hành động đó, với điều kiện sau đây:
+
+Thông báo bản quyền và điều khoản cấp phép này phải được bao gồm trong tất cả các bản sao hoặc phần đáng kể của phần mềm.
+
+PHẦN MỀM NÀY ĐƯỢC CUNG CẤP “NGUYÊN TRẠNG”, KHÔNG CÓ BẤT KỲ BẢO ĐẢM NÀO, DÙ RÕ RÀNG HAY NGỤ Ý, BAO GỒM NHƯNG KHÔNG GIỚI HẠN Ở CÁC BẢO ĐẢM VỀ KHẢ NĂNG MUA BÁN, PHÙ HỢP VỚI MỤC ĐÍCH CỤ THỂ VÀ KHÔNG VI PHẠM. TRONG MỌI TRƯỜNG HỢP, TÁC GIẢ HOẶC CHỦ SỞ HỮU BẢN QUYỀN SẼ KHÔNG CHỊU TRÁCH NHIỆM VỀ BẤT KỲ KHIẾU NẠI, THIỆT HẠI HOẶC TRÁCH NHIỆM NÀO KHÁC, DÙ TRONG HÀNH ĐỘNG HỢP ĐỒNG, HÀNH VI DÂN SỰ HAY CÁCH KHÁC, PHÁT SINH TỪ HOẶC LIÊN QUAN ĐẾN PHẦN MỀM HOẶC VIỆC SỬ DỤNG PHẦN MỀM NÀY.
+
 
 ---
 
