@@ -269,20 +269,6 @@ dist/VPN_Tool_Package/
 
 ---
 
-## 🌍 Quốc Gia Phổ Biến
-
-| Quốc Gia | Mã | Quốc Gia | Mã |
-|----------|-----|----------|-----|
-| 🇯🇵 Nhật Bản | JP | 🇰🇷 Hàn Quốc | KR |
-| 🇺🇸 Mỹ | US | 🇬🇧 Anh | GB |
-| 🇨🇦 Canada | CA | 🇦🇺 Úc | AU |
-| 🇸🇬 Singapore | SG | 🇹🇭 Thái Lan | TH |
-| 🇻🇳 Việt Nam | VN | 🇩🇪 Đức | DE |
-
-Xem đầy đủ: `python vpn_tool.py list`
-
----
-
 ## 🛠️ Troubleshooting
 
 ### ❌ "OpenVPN chưa được cài đặt"
@@ -350,7 +336,7 @@ ipconfig /flushdns
 ## 📁 Cấu Trúc Dự Án
 
 ```
-create_vpn/
+create_vpn_13102025/
 ├── main_gui.py          # GUI entry point
 ├── vpn_gui.py           # GUI implementation (PyQt5)
 ├── vpn_tool.py          # CLI interface
@@ -363,37 +349,8 @@ create_vpn/
 ├── vpn_tool.spec        # PyInstaller config
 │
 ├── README.md            # This file
-├── GUI.md               # GUI documentation
 ├── BUILD.md             # Build documentation
-├── INSTALL.md           # Installation guide
-└── QUICKSTART.md        # Quick reference
-```
 
----
-
-## ⚙️ Configuration
-
-File `config.yaml` chứa cấu hình:
-
-```yaml
-# VPN Provider
-provider: "vpngate"
-
-# Connection Settings
-connection:
-  timeout: 30
-  max_retries: 3
-  auto_reconnect: true
-  reconnect_interval: 10
-
-# Paths
-paths:
-  config_dir: "vpn_configs"
-  log_file: "vpn_tool.log"
-
-# Logging
-logging:
-  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
 ```
 
 ---
@@ -414,46 +371,6 @@ logging:
 - Không gửi thông tin nhạy cảm qua VPN miễn phí
 - Luôn sử dụng HTTPS cho sites quan trọng
 - Đối với công việc nghiêm túc → dùng VPN trả phí
-
----
-
-## 📚 Documentation
-
-### User Guides
-- 📖 **README.md** - Tổng quan (file này)
-- 📦 **BUILD.md** - Hướng dẫn build .exe
-
----
-
-## 🎓 Examples
-
-### Example 1: Quick VPN to Japan (GUI)
-```bash
-python main_gui.py
-# → Chọn "Japan (JP)"
-# → Click "Kết Nối VPN"
-# → Done!
-```
-
-### Example 2: Quick VPN to US (CLI)
-```bash
-python vpn_tool.py connect US --admin
-# → Kết nối tự động
-```
-
-### Example 3: Build và phân phối
-```bash
-python build.py
-# → dist/VPN_Tool_Package/VPN_Connection_Tool.exe
-# → Gửi file .exe cho người khác
-```
-
-### Example 4: Auto-reconnect mode
-```bash
-python vpn_tool.py auto-reconnect JP
-# → Tự động kết nối lại khi ngắt
-# → Nhấn Ctrl+C để dừng
-```
 
 ---
 
@@ -482,9 +399,5 @@ Contributions are welcome! Please:
 MIT License - Tự do sử dụng, chỉnh sửa, phân phối
 
 ---
-
-- **Version**: 2.0.4
-- **Last Updated**: 15/10/2025
-- **Status**: ✅ Production Ready
 
 **Happy VPN-ing! 🚀**
