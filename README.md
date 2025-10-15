@@ -35,8 +35,6 @@
 python main_gui.py
 ```
 
-**Chi tiết**: Xem [GUI.md](GUI.md)
-
 ---
 
 ### ⌨️ CLI Mode (Dành cho power users)
@@ -471,12 +469,6 @@ Contributions are welcome! Please:
 
 ---
 
-## 📄 License
-
-MIT License - Tự do sử dụng, chỉnh sửa, phân phối
-
----
-
 ## 🙏 Credits
 
 - **VPN Gate**: https://www.vpngate.net/ - Free VPN service
@@ -490,10 +482,9 @@ MIT License - Tự do sử dụng, chỉnh sửa, phân phối
 
 ### Cần Giúp Đỡ?
 
-1. 📖 Check documentation files (GUI.md, BUILD.md, INSTALL.md)
+1. 📖 Check documentation files (BUILD.md)
 2. 🐛 Check troubleshooting sections
 3. 📝 Check log file: `vpn_tool.log`
-4. 💬 Email: ntd237.work@gmail.com
 
 ### 👤 Tác Giả
 
@@ -503,8 +494,14 @@ MIT License - Tự do sử dụng, chỉnh sửa, phân phối
 
 ---
 
-**Version**: 2.0.3  
-**Last Updated**: 2025-10-13  
+## 📄 License
+
+MIT License - Tự do sử dụng, chỉnh sửa, phân phối
+
+---
+
+**Version**: 2.0.4
+**Last Updated**: 15/10/2025
 **Status**: ✅ Production Ready
 
 **Happy VPN-ing! 🚀**
