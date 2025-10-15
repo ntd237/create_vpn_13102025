@@ -469,15 +469,6 @@ Contributions are welcome! Please:
 
 ---
 
-## 🙏 Credits
-
-- **VPN Gate**: https://www.vpngate.net/ - Free VPN service
-- **OpenVPN**: https://openvpn.net/ - VPN client
-- **PyQt5**: GUI framework
-- **PyInstaller**: .exe packaging
-
----
-
 ## 📞 Support
 
 - **Tác giả**: ntd237
