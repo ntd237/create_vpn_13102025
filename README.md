@@ -175,8 +175,6 @@ python main_gui.py
 └─────────────────────────────────────────────┘
 ```
 
-**Chi tiết đầy đủ**: [GUI.md](GUI.md)
-
 ---
 
 ## ⌨️ CLI Usage
@@ -241,7 +239,7 @@ python vpn_tool.py auto-reconnect JP
 
 ## 📦 Build Standalone .EXE
 
-### Quick Build (3 Steps)
+### Quick Build 
 
 ```bash
 # 1. Cài dependencies (nếu chưa)
@@ -335,8 +333,6 @@ python vpn_tool.py connect JP
 ipconfig /flushdns
 ```
 
-**Xem thêm troubleshooting**: [INSTALL.md](INSTALL.md)
-
 ---
 
 ## 📊 So Sánh Các Chế Độ
@@ -427,15 +423,7 @@ logging:
 
 ### User Guides
 - 📖 **README.md** - Tổng quan (file này)
-- 🖥️ **GUI.md** - Hướng dẫn GUI chi tiết
 - 📦 **BUILD.md** - Hướng dẫn build .exe
-- ⚡ **QUICKSTART.md** - Quick reference
-- 🔧 **INSTALL.md** - Installation & troubleshooting
-
-### Developer Docs
-- 📝 **CLAUDE.md** - AI coding guidelines
-- 📋 **CHANGELOG.md** - Version history
-- 🏗️ **PROJECT_SUMMARY.md** - Project overview
 
 ---
 
@@ -489,14 +477,6 @@ MIT License - Tự do sử dụng, chỉnh sửa, phân phối
 
 ---
 
-## 👤 Tác Giả
-
-- **Tên**: ntd237
-- **Email**: ntd237.work@gmail.com
-- **GitHub**: https://github.com/ntd237
-
----
-
 ## 🙏 Credits
 
 - **VPN Gate**: https://www.vpngate.net/ - Free VPN service
@@ -515,12 +495,11 @@ MIT License - Tự do sử dụng, chỉnh sửa, phân phối
 3. 📝 Check log file: `vpn_tool.log`
 4. 💬 Email: ntd237.work@gmail.com
 
-### Quick Links
+### 👤 Tác Giả
 
-- [GUI Documentation](GUI.md)
-- [Build Guide](BUILD.md)
-- [Installation Guide](INSTALL.md)
-- [Quick Start](QUICKSTART.md)
+- **Tên**: ntd237
+- **Email**: ntd237.work@gmail.com
+- **GitHub**: https://github.com/ntd237
 
 ---
 
