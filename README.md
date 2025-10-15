@@ -480,15 +480,7 @@ Contributions are welcome! Please:
 
 ## 📞 Support
 
-### Cần Giúp Đỡ?
-
-1. 📖 Check documentation files (BUILD.md)
-2. 🐛 Check troubleshooting sections
-3. 📝 Check log file: `vpn_tool.log`
-
-### 👤 Tác Giả
-
-- **Tên**: ntd237
+- **Tác giả**: ntd237
 - **Email**: ntd237.work@gmail.com
 - **GitHub**: https://github.com/ntd237
 
@@ -500,8 +492,8 @@ MIT License - Tự do sử dụng, chỉnh sửa, phân phối
 
 ---
 
-**Version**: 2.0.4
-**Last Updated**: 15/10/2025
-**Status**: ✅ Production Ready
+- **Version**: 2.0.4
+- **Last Updated**: 15/10/2025
+- **Status**: ✅ Production Ready
 
 **Happy VPN-ing! 🚀**
